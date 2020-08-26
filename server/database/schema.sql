@@ -1,7 +1,9 @@
-CREATE DATABASE IF NOT EXISTS image_carousel;
+-- CREATE DATABASE IF NOT EXISTS image_carousel;
+DROP DATABASE IF EXISTS image_carousel;
+CREATE DATABASE image_carousel;
 
 USE image_carousel;
-CREATE USER 'traveler'@'localhost' IDENTIFIED BY 'travel';
+-- CREATE USER 'traveler'@'localhost' IDENTIFIED BY 'travel';
 
 
 DROP TABLE IF EXISTS hostels;
@@ -25,5 +27,5 @@ CREATE TABLE images (
     ON DELETE CASCADE
 );
 
-GRANT ALL ON image_carousel.* to 'traveler'@'localhost';
+-- GRANT ALL ON image_carousel.* to 'traveler'@'localhost';
 

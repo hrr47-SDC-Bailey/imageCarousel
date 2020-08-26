@@ -16,10 +16,10 @@ module.exports.fetchAllByHostelId = (id, callback) => {
 module.exports.createNewEntry = (newImage, callback) => {
   // const queryStr = 'SELECT * FROM `images` WHERE hostel_id = ?';
   // const queryArgs = [id];
-  const fileName = newImage.fileName;
+  const fileName = newImage.file_name;
   const url = newImage.url;
   const description = newImage.description;
-  const hostelId = newImage.hostelId;
+  const hostelId = newImage.hostel_id;
   const queryStr = 'INSERT INTO `images` (file_name, url, description, hostel_id) VALUES (?, ?, ?, ?)';
   const queryArgs = [fileName, url, description, hostelId];
 
@@ -51,7 +51,7 @@ module.exports.updateEntry = (imageToUpdate, callback) => {
   // const queryStr = 'SELECT * FROM `images` WHERE hostel_id = ?';
   // const queryArgs = [id];
   const queryStr = 'UPDATE `images` SET `file_name` = ?, `url` = ?, `description` = ?, `hostel_id` = ? WHERE `id` = ?';
-  const queryArgs = [imageToUpdate.fileName, imageToUpdate.url, imageToUpdate.description, imageToUpdate.hostelId, imageToUpdate.id];
+  const queryArgs = [imageToUpdate.file_name, imageToUpdate.url, imageToUpdate.description, imageToUpdate.hostel_id, imageToUpdate.id];
 
   db.query(queryStr, queryArgs, (error, results) => {
     if (error || results.length === 0) {

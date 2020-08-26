@@ -32,12 +32,23 @@ app.get('/api/hostels/:hostel_id/images', (req, res) => {
 
 app.post('/api/hostels/:hostel_id/images', (req, res) => {
   console.log(req.body);
-  models.image.createNewEntry(req.body, (error, newImage) => {
+  models.image.createNewEntry(req.body.id, (error, newImage) => {
     if (error) {
       res.status(502).send();
       return;
     }
     res.send(newImage);
+  });
+});
+
+app.delete('/api/hostels/:hostel_id/images', (req, res) => {
+  console.log(req.body);
+  models.image.deleteEntry(req.body.id, (error, deletedImage) => {
+    if (error) {
+      res.status(502).send();
+      return;
+    }
+    res.send(deletedImage);
   });
 });
 

@@ -1,9 +1,12 @@
 const express = require('express');
+const bodyParser = require("body-parser");
 const path = require('path');
 const models = require('./models/index.js');
 const cors = require('cors');
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   next();
@@ -24,6 +27,17 @@ app.get('/api/hostels/:hostel_id/images', (req, res) => {
       return;
     }
     res.send(images);
+  });
+});
+
+app.post('/api/hostels/:hostel_id/images', (req, res) => {
+  console.log(req.body);
+  models.image.createNewEntry(req.body, (error, newImage) => {
+    if (error) {
+      res.status(502).send();
+      return;
+    }
+    res.send(newImage);
   });
 });
 

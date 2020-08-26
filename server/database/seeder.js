@@ -40,14 +40,16 @@ function generateImages(hostelId) {
     if (hostelId === 100 && i === imageCount) {
       db.query(queryStr, queryArgs, (error) => {
         if (error) {
-          throw new Error('Error occured while seeding images');
+          throw error;
+          // throw new Error('Error occured while seeding images');
         }
         db.end();
       });
     } else {
       db.query(queryStr, queryArgs, (error) => {
         if (error) {
-          throw new Error('Error occured while seeding images');
+          throw error;
+          // throw new Error('Error occured while seeding images');
         }
       });
     }
@@ -66,7 +68,8 @@ for (let i = 1; i < 101; i += 1) {
   // insert new row into hostels table
   db.query(queryStr, queryArgs, (error) => {
     if (error) {
-      throw new Error('Error occured seeding hostels');
+      throw error;
+      // throw new Error('Error occured seeding hostels');
     }
   });
 

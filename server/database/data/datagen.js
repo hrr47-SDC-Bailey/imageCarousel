@@ -2,34 +2,38 @@ const faker = require('faker');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 const csvWriter = createCsvWriter({
-  path: 'images.csv',
+  path: 'cassandra.csv',
   header: [
-    { id: 'hostelId', title: 'ID' },
-    { id: 'hostelName', title: 'HOSTELNAME' },
-    { id: 'hostelAddress', title: 'HOSTELADDRESS' },
+    // { id: 'imageId', title: 'IMAGEID' },
+    { id: 'hostelId', title: 'HOSTELID' },
+    // { id: 'hostelName', title: 'HOSTELNAME' },
+    // { id: 'hostelAddress', title: 'HOSTELADDRESS' },
     { id: 'url', title: 'URL' },
   ],
 });
 
 let recordCount = 0;
+let imageId = 1;
 const desiredRecords = 10000000;
-const storedImageCount = 648;
+const storedImageCount = 1000;
+//used to be 648, need to add more images
 
 const generateImages = (hostelId) => {
   let imageCount = 15;
   const images = [];
-  const hostelName = `${faker.hacker.adjective()} ${faker.hacker.noun()} Hostel`;
-  const hostelAddress = `${faker.address.streetAddress()} ${faker.address.streetName()} ${faker.address.streetSuffix()}, ${faker.address.city()}, ${faker.address.stateAbbr()} ${faker.address.zipCode()}, ${faker.address.countryCode()}`;
+  // const hostelName = `${faker.hacker.adjective()} ${faker.hacker.noun()} Hostel`;
+  // const hostelAddress = `${faker.address.streetAddress()} ${faker.address.streetName()} ${faker.address.streetSuffix()}, ${faker.address.city()}, ${faker.address.stateAbbr()} ${faker.address.zipCode()}, ${faker.address.countryCode()}`;
   while (imageCount > 0) {
-    const fileNumber = Math.floor(Math.random() * storedImageCount);
+    const fileNumber = Math.floor(Math.random() * storedImageCount) + 1;
     const url = `https://sdc-bailey-imagecarousel.s3.us-east-2.amazonaws.com/${fileNumber}.jpg`;
+    // console.log(imageId);
     images.push({
+      // imageId,
       hostelId,
-      hostelName,
-      hostelAddress,
       url,
     });
     imageCount -= 1;
+    imageId += 1;
   }
   return images;
 };

@@ -1,8 +1,8 @@
 const express = require('express');
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 const path = require('path');
-const models = require('./models/index.js');
 const cors = require('cors');
+const models = require('./models/index.js');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,7 +23,8 @@ app.get('/api/hostels/:hostel_id/images', (req, res) => {
     // console.log('error: ', error, 'images', images);
 
     if (error) {
-      res.status(502).send();
+      res.send(error);
+      // res.status(502).send();
       return;
     }
     res.send(images);
@@ -34,7 +35,8 @@ app.post('/api/hostels/:hostel_id/images', (req, res) => {
   console.log(req.body);
   models.image.createNewEntry(req.body, (error, newImage) => {
     if (error) {
-      res.status(502).send();
+      // res.status(502).send();
+      res.send(error);
       return;
     }
     res.send(newImage);

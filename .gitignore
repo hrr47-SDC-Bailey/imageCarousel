@@ -28,3 +28,6 @@ public/bundle.js
 # data generation files
 
 *.csv
+
+#config files for database
+server/database/dbconfig.js

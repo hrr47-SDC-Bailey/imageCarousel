@@ -1,31 +1,27 @@
 const db = require('../database/index.js');
 
 module.exports.fetchAllByHostelId = (id, callback) => {
-  const queryStr = 'SELECT * FROM `images` WHERE hostel_id = ?';
+  const queryStr = 'SELECT * FROM images WHERE hostel_id = $1';
   const queryArgs = [id];
 
   db.query(queryStr, queryArgs, (error, results) => {
     if (error || results.length === 0) {
-      callback('error', null);
+      callback(error.stack, null);
       return;
     }
-    callback(null, results);
+    callback(null, results.rows);
   });
 };
 
 module.exports.createNewEntry = (newImage, callback) => {
-  // const queryStr = 'SELECT * FROM `images` WHERE hostel_id = ?';
-  // const queryArgs = [id];
-  const fileName = newImage.file_name;
   const url = newImage.url;
-  const description = newImage.description;
   const hostelId = newImage.hostel_id;
-  const queryStr = 'INSERT INTO `images` (file_name, url, description, hostel_id) VALUES (?, ?, ?, ?)';
-  const queryArgs = [fileName, url, description, hostelId];
+  const queryStr = 'INSERT INTO images (hostel_id, url) VALUES ($1, $2)';
+  const queryArgs = [hostelId, url];
 
   db.query(queryStr, queryArgs, (error, results) => {
     if (error || results.length === 0) {
-      callback('error', null);
+      callback(error, null);
       return;
     }
     callback(null, results);
@@ -33,9 +29,7 @@ module.exports.createNewEntry = (newImage, callback) => {
 };
 
 module.exports.deleteEntry = (id, callback) => {
-  // const queryStr = 'SELECT * FROM `images` WHERE hostel_id = ?';
-  // const queryArgs = [id];
-  const queryStr = 'DELETE FROM `images` WHERE `id` = ?';
+  const queryStr = 'DELETE FROM images WHERE id = $1';
   const queryArgs = [id];
 
   db.query(queryStr, queryArgs, (error, results) => {
@@ -48,10 +42,8 @@ module.exports.deleteEntry = (id, callback) => {
 };
 
 module.exports.updateEntry = (imageToUpdate, callback) => {
-  // const queryStr = 'SELECT * FROM `images` WHERE hostel_id = ?';
-  // const queryArgs = [id];
-  const queryStr = 'UPDATE `images` SET `file_name` = ?, `url` = ?, `description` = ?, `hostel_id` = ? WHERE `id` = ?';
-  const queryArgs = [imageToUpdate.file_name, imageToUpdate.url, imageToUpdate.description, imageToUpdate.hostel_id, imageToUpdate.id];
+  const queryStr = 'UPDATE images SET hostel_id = $1, url = $2 WHERE id = $3';
+  const queryArgs = [imageToUpdate.hostel_id, imageToUpdate.url, imageToUpdate.id];
 
   db.query(queryStr, queryArgs, (error, results) => {
     if (error || results.length === 0) {

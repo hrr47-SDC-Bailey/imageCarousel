@@ -31,3 +31,6 @@ public/bundle.js
 
 #config files for database
 server/database/dbconfig.js
+
+#newrelic file
+newrelic.js

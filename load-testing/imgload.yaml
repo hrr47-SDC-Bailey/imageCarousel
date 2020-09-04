@@ -2,16 +2,18 @@ config:
   target: "http://localhost:3007"
   phases:
     - duration: 30
-      arrivalRate: 10
+      arrivalRate: 1
       name: Warm up
     - duration: 30
-      arrivalRate: 100
+      arrivalRate: 10
       name: Ramp up load
-    - duration: 60
-      arrivalRate: 500
+    - duration: 180
+      arrivalRate: 60
       name: Sustained load
 scenarios:
   - name: "Get images"
     flow:
-      - get:
-          url: "/api/hostels/{{$randomNumber(1,10000000)}}/images"
+      - loop:
+        - get:
+            url: "/api/hostels/{{$randomNumber(9000000,10000000)}}/images"
+        count: 100

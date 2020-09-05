@@ -1,7 +1,7 @@
 const db = require('../database/index.js');
 
 module.exports.fetchAllByHostelId = (id, callback) => {
-  const queryStr = 'SELECT * FROM images WHERE hostel_id = $1';
+  const queryStr = `select hostel_id, concat('https://sdc-bailey-imagecarousel.s3.us-east-2.amazonaws.com/',url,'.jpg') "url" FROM images WHERE hostel_id = $1`;
   const queryArgs = [id];
   db.pool.connect((err, client, done) => {
     if (err) {

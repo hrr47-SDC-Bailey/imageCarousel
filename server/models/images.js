@@ -3,13 +3,19 @@ const db = require('../database/index.js');
 module.exports.fetchAllByHostelId = (id, callback) => {
   const queryStr = 'SELECT * FROM images WHERE hostel_id = $1';
   const queryArgs = [id];
-
-  db.query(queryStr, queryArgs, (error, results) => {
-    if (error || results.length === 0) {
-      callback(error.stack, null);
-      return;
+  db.pool.connect((err, client, done) => {
+    if (err) {
+      return console.error('error acquiring client', err.stack);
     }
-    callback(null, results.rows);
+    client.query(queryStr, queryArgs, (error, results) => {
+      done();
+      if (error || results.length === 0) {
+        callback(error.stack, null);
+        console.log(error.stack);
+        return;
+      }
+      callback(null, results.rows);
+    });
   });
 };
 
@@ -19,25 +25,38 @@ module.exports.createNewEntry = (newImage, callback) => {
   const queryStr = 'INSERT INTO images (hostel_id, url) VALUES ($1, $2)';
   const queryArgs = [hostelId, url];
 
-  db.query(queryStr, queryArgs, (error, results) => {
-    if (error || results.length === 0) {
-      callback(error, null);
-      return;
+  db.pool.connect((err, client, done) => {
+    if (err) {
+      return console.error('error acquiring client', err.stack);
     }
-    callback(null, results);
+    client.query(queryStr, queryArgs, (error, results) => {
+      done();
+      if (error || results.length === 0) {
+        callback(error.stack, null);
+        console.log(error.stack);
+        return;
+      }
+      callback(null, results.rows);
+    });
   });
 };
 
 module.exports.deleteEntry = (id, callback) => {
   const queryStr = 'DELETE FROM images WHERE id = $1';
   const queryArgs = [id];
-
-  db.query(queryStr, queryArgs, (error, results) => {
-    if (error || results.length === 0) {
-      callback('error', null);
-      return;
+  db.pool.connect((err, client, done) => {
+    if (err) {
+      return console.error('error acquiring client', err.stack);
     }
-    callback(null, results);
+    client.query(queryStr, queryArgs, (error, results) => {
+      done();
+      if (error || results.length === 0) {
+        callback(error.stack, null);
+        console.log(error.stack);
+        return;
+      }
+      callback(null, results.rows);
+    });
   });
 };
 
@@ -45,11 +64,18 @@ module.exports.updateEntry = (imageToUpdate, callback) => {
   const queryStr = 'UPDATE images SET hostel_id = $1, url = $2 WHERE id = $3';
   const queryArgs = [imageToUpdate.hostel_id, imageToUpdate.url, imageToUpdate.id];
 
-  db.query(queryStr, queryArgs, (error, results) => {
-    if (error || results.length === 0) {
-      callback('error', null);
-      return;
+  db.pool.connect((err, client, done) => {
+    if (err) {
+      return console.error('error acquiring client', err.stack);
     }
-    callback(null, results);
+    client.query(queryStr, queryArgs, (error, results) => {
+      done();
+      if (error || results.length === 0) {
+        callback(error.stack, null);
+        console.log(error.stack);
+        return;
+      }
+      callback(null, results.rows);
+    });
   });
 };

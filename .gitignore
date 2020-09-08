@@ -33,4 +33,4 @@ public/bundle.js
 server/database/dbconfig.js
 
 #newrelic file
-newrelic.js
+

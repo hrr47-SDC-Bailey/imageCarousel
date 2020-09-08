@@ -7,7 +7,7 @@ import { ImageGrid } from './ImageGrid.jsx';
 import { ImageCarousel } from './ImageCarousel.jsx';
 import SearchBar from './SearchBar.jsx';
 
-const url = '18.218.24.31';
+const url = '3.135.180.53';
 
 const GlobalStyle = createGlobalStyle`
   @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap");

@@ -16,6 +16,10 @@ app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/hostels/:hostel_id', express.static(path.join(__dirname, '../public')));
 
+app.get('/loaderio-bb4a4cbb3572b5cb6fd1eef99c0e7ff4/', (req, res) => {
+  res.send('loaderio-bb4a4cbb3572b5cb6fd1eef99c0e7ff4');
+});
+
 app.get('/api/hostels/:hostel_id/images', (req, res) => {
   models.image.fetchAllByHostelId(req.params.hostel_id, (error, images) => {
     if (error) {
